@@ -202,7 +202,15 @@ To maintain IP protection and prevent unauthorized reuse, access is granted **up
 
 If you are a recruiter, hiring manager, or interviewer and would like to review the code,  
 **please contact me and I will provide read-only access.**
+please contact me with your:
+Full name
+Company / Role
+GitHub username
 
+You can reach me at:
+
+Email: walid7benmaarouf@gmail.com
+LinkedIn: www.linkedin.com/in/walid-benmaarouf-08089a275
 ---
 
 ## 📄 License
