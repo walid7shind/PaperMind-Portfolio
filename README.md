@@ -1,228 +1,209 @@
-# PaperMind – Document Intelligence & RAG Platform
+# PaperMind – AI Document Intelligence Platform
 
-PaperMind is a full-stack Retrieval-Augmented Generation (RAG) platform designed to transform unstructured PDFs into searchable knowledge and provide accurate, context-grounded answers through a conversational interface.
+PaperMind is a full-stack AI platform that transforms PDF documents into a searchable knowledge base and allows users to interact with their documents through a conversational interface powered by Retrieval-Augmented Generation (RAG).
 
-The system combines:
-- A React frontend  
-- A FastAPI backend  
-- A fully automated ingestion pipeline  
-- Qdrant as a vector database  
-- OpenAI models for embeddings, HyDE generation, reranking, and summarization  
+It is designed as a modern document intelligence system with:
 
-The goal is to deliver a scalable and reliable document-questioning experience that supports research, technical documentation, and complex multi-PDF workflows.
+- a React frontend
+- a FastAPI backend
+- authentication with Supabase
+- Google sign-in
+- Bring Your Own Key (BYOK) support
+- a trial mode for quick product evaluation
+- automated PDF ingestion and embedding
+- Qdrant for vector storage
+- OpenAI-powered semantic retrieval and answer generation
+- Dockerized deployment
+- production deployment on Render
 
----
-
-## 🚀 Core Features
-
-### **1. Automated PDF Ingestion Pipeline**
-Once PDFs are uploaded, PaperMind triggers a background pipeline that runs independently of user-facing requests:
-
-- PDF → JSON conversion  
-- Metadata enrichment (title, topic, keywords, language)  
-- Semantic chunking  
-- Embedding generation (OpenAI `text-embedding-3-large`)  
-- Upsert into Qdrant  
-- Cleanup of temporary files  
-
-The pipeline is async, fault-tolerant, and designed to handle multiple documents in parallel.
+The goal of PaperMind is to provide a practical, deployable, and scalable AI product for document querying, technical knowledge exploration, and multi-file semantic search.
 
 ---
 
-### **2. Vector Search Powered by Qdrant**
-Qdrant stores:
-- Document-level vectors  
-- Chunk-level vectors  
-- Topic centroid vectors  
+## Live Demo
 
-It enables:
-- High-performance semantic search  
-- Filtering by topic, discipline, filename, or level  
-- Scalable HNSW indexing for low-latency retrieval  
+https://papermind-frontend.onrender.com/
 
-This provides the backbone for all RAG operations.
+> The full source code is maintained in a private repository.  
+> This public repository is intended to showcase the product, architecture, features, and deployment approach.
 
 ---
 
-### **3. Hybrid Retrieval-Augmented Generation**
-PaperMind’s retrieval flow is designed for accuracy and robustness:
+## Core Product Features
 
-- Query embedding  
-- Query rewriting (multiple paraphrases)  
-- HyDE (Hypothetical Document Embeddings)  
-- Vector search over multiple variants  
-- LLM-based reranking (gpt-4o-mini)  
-- Context summarization  
-- Final answer generation with source grounding  
+### 1. Authentication & User Access Management
 
-This multi-step pipeline significantly improves recall and quality compared to standard vector search alone.
+PaperMind now includes a real access layer instead of a simple demo-only interface.
 
----
+Supported access modes:
 
-### **4. Real-Time Conversational Interface**
-The React frontend provides:
+- Google authentication via Supabase Auth
+- session-based secured access
+- protected user flows
+- trial access path for product discovery
+- Bring Your Own Key (BYOK) mode for users who want to use their own OpenAI API key
 
-- Streaming chat responses  
-- Markdown rendering (with code blocks)  
-- Persistent conversation history  
-- Scenario-building form sidebar  
-- PDF upload interface with drag-and-drop  
-- PDF export of answers (jsPDF)
+This makes the project closer to a real SaaS product than a simple RAG prototype.
 
 ---
 
-### **5. Backend API (FastAPI)**
-The backend exposes:
+### 2. Trial Version + BYOK Mode
 
-- `/ask` – streaming LLM responses  
-- `/api/upload-pdfs` – file ingestion  
-- `/api/processing-status` – pipeline progress  
-- `/convos` – conversation history  
-- `/config-debug` – debug mode visibility  
+PaperMind supports two user experiences:
 
-The API is stateless and easy to scale horizontally behind an ASGI server.
+#### Trial mode
+A lightweight product experience for users who want to test the platform quickly.
+
+Typical purpose:
+- evaluate the UI
+- test document querying
+- explore the workflow before committing
+
+#### BYOK (Bring Your Own Key)
+Users can provide their own API key to run the platform with their own usage budget.
+
+Advantages:
+- lower platform-side inference cost
+- flexible experimentation
+- SaaS-friendly architecture
+- easier monetization path
+
+This design is especially useful for AI products where inference cost management matters.
 
 ---
 
-## 🏗️ System Architecture (High-Level)
+### 3. Automated PDF Ingestion Pipeline
 
-Frontend (React)
-|— Chat UI / Streaming
-|— PDF Upload
-|— Conversation Management
+Once PDFs are uploaded, PaperMind launches a background ingestion workflow that runs independently from chat requests.
+
+Pipeline stages include:
+
+- PDF to JSON conversion
+- metadata extraction and enrichment
+- semantic chunk preparation
+- embedding generation
+- vector upsert into Qdrant
+- cleanup of temporary files
+
+This pipeline is designed to keep the user-facing app responsive while documents are processed asynchronously.
+
+---
+
+### 4. RAG-Based Question Answering
+
+PaperMind uses a multi-step Retrieval-Augmented Generation pipeline to improve answer quality and retrieval precision.
+
+The retrieval flow includes:
+
+- query embedding
+- query rewriting
+- multiple semantic variants
+- HyDE-style retrieval expansion
+- vector search in Qdrant
+- reranking
+- context summarization
+- grounded answer generation
+
+This architecture improves recall and reduces the weakness of naive single-query vector retrieval.
+
+---
+
+### 5. Vector Search with Qdrant
+
+Qdrant is used as the semantic retrieval engine for PaperMind.
+
+Stored vector layers include:
+
+- document-level vectors
+- chunk-level vectors
+- topic-level representations
+
+This enables:
+
+- semantic similarity search
+- scalable retrieval
+- low-latency vector lookups
+- flexible metadata-based filtering
+- document-aware answer grounding
+
+---
+
+### 6. Real-Time Conversational Interface
+
+The frontend provides a user experience closer to a real AI product than a research script.
+
+Main capabilities:
+
+- streaming responses
+- chat-based document interaction
+- persistent conversation history
+- markdown rendering
+- drag-and-drop PDF upload
+- scenario / context side panel
+- PDF export of answers
+
+The goal is to make document interaction feel natural and product-oriented.
+
+---
+
+### 7. Production Deployment
+
+PaperMind is no longer just a local prototype.
+
+The application has been prepared for deployment with:
+
+- Dockerized services
+- separated frontend and backend images
+- production deployment on Render
+- managed Supabase backend services
+- hosted Qdrant vector database
+- cloud-ready architecture
+
+This makes the project demonstrably closer to production engineering standards.
+
+---
+
+## High-Level Architecture
+
+```text
+User
 ↓
-Backend (FastAPI)
-|— Streaming Chat Endpoint
-|— Upload Endpoint
-|— RAG Controller
+React Frontend
+├── Authentication UI
+├── Google Sign-In
+├── Trial Access
+├── BYOK Input
+├── Chat Interface
+├── PDF Upload
+└── Conversation History
 ↓
-Background Pipeline
-|— pdfTojson
-|— json_enrichment
-|— vector_store_service
+FastAPI Backend
+├── Auth-aware API layer
+├── Streaming chat endpoint
+├── Upload endpoint
+├── Processing status endpoint
+└── RAG orchestration
+↓
+Document Processing Pipeline
+├── PDF extraction
+├── JSON enrichment
+├── chunk preparation
+├── embedding generation
+└── Qdrant upsert
 ↓
 Qdrant Vector Store
-|— Document Vectors
-|— Chunk Vectors
-|— Topic Centroids
+├── document vectors
+├── chunk vectors
+└── topic-level representations
 ↓
-OpenAI LLMs
-|— Embeddings
-|— HyDE
-|— Reranking
-|— Summarization
-|— Final Chat Model
-
-yaml
-Copy code
-
----
-
-## ⚙️ Tech Stack
-
-**Frontend**
-- React (Hooks + Context)
-- Markdown rendering (react-markdown)
-- Streaming via ReadableStream API
-
-**Backend**
-- FastAPI  
-- httpx (streaming OpenAI responses)
-- PyMuPDF  
-- Python-dotenv  
-- Subprocess-based pipeline orchestration  
-
-**Vector Store**
-- Qdrant Cloud (HNSW index)
-
-**LLM / AI**
-- OpenAI GPT-4o-mini (rerank + summarize + HyDE)
-- text-embedding-3-large (embeddings)
-
----
-
-## 📦 Pipeline Components
-
-| Component                | Responsibility                                        |
-|--------------------------|--------------------------------------------------------|
-| `pdfTojson.py`           | Text extraction + initial JSON                         |
-| `json_enrichment.py`     | Metadata enrichment + summary                          |
-| `vector_store_service.py`| Embedding + Qdrant upsert                              |
-| `main_embeding.py`       | Orchestration + logging + cleanup                      |
-
-All components run in isolation from the API to guarantee responsiveness.
-
----
-
-## 🔒 Security & Privacy
-
-- Uploaded PDFs are not retained long-term  
-- Temporary files are cleaned after embedding  
-- API keys stored only server-side  
-- Qdrant interactions over HTTPS  
-- No client-side secrets  
-- No user data shared between tenants  
-
----
-
-## 📈 Scalability
-
-- FastAPI is stateless → horizontally scalable  
-- Qdrant cluster autoscales  
-- Pipeline can run multiple workers in parallel  
-- React is fully static → deploy anywhere (CDN, S3, Netlify, etc.)  
-- Vector search O(log n) due to HNSW topology  
-
----
-
-## ⚠️ Known Limitations
-
-- HyDE increases latency and cost  
--  figures or curve of a function may be poorly RAGed if complex as PDF-to-text
-extractor llm might find them difficult to describe 
-- Summaries are constrained strictly to retrieved context  
-
----
-
-## 🔮 Future Improvements
-
-- Adaptive semantic chunking  
-- OCR + layout parsing for tables and figures  
-- Cross-document reasoning (multi-hop retrieval)  
-- Caching layer for embeddings and HyDE  
-- Local embedding model fallback  
-- Fine-grained access control + encryption  
-
----
-
-## 📥 Code Access
-
-The full source code for PaperMind is stored in a **private GitHub repository**.  
-To maintain IP protection and prevent unauthorized reuse, access is granted **upon request**.
-
-If you are a recruiter, hiring manager, or interviewer and would like to review the code,  
-**please contact me and I will provide read-only access.**
-please contact me with your:
-Full name
-Company / Role
-GitHub username
-
-You can reach me at:
-
-Email: walid7benmaarouf@gmail.com
-LinkedIn: www.linkedin.com/in/walid-benmaarouf-08089a275
----
-
-## 📄 License
-This project is private and not licensed for public redistribution.
-
----
-
-## 👤 Author
-**Walid BENMAAROUF**
-
-AI & Computer Vision Engineer  
-
-Based in France 🇫🇷
-
-For questions or read-only code access, feel free to contact me.
+OpenAI Models
+├── embeddings
+├── retrieval expansion
+├── reranking
+├── summarization
+└── final answer generation
+↓
+Supabase
+├── authentication
+├── Google OAuth
+└── user/session management
