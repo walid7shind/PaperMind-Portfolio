@@ -1,3 +1,13 @@
+
+## Live Demo
+
+https://papermind-frontend.onrender.com/
+
+> The full source code is maintained in a private repository.  
+> This public repository is intended to showcase the product, architecture, features, and deployment approach.
+
+---
+
 # PaperMind – AI Document Intelligence Platform
 
 PaperMind is a full-stack AI platform that transforms PDF documents into a searchable knowledge base and allows users to interact with their documents through a conversational interface powered by Retrieval-Augmented Generation (RAG).
@@ -17,15 +27,6 @@ It is designed as a modern document intelligence system with:
 - production deployment on Render
 
 The goal of PaperMind is to provide a practical, deployable, and scalable AI product for document querying, technical knowledge exploration, and multi-file semantic search.
-
----
-
-## Live Demo
-
-https://papermind-frontend.onrender.com/
-
-> The full source code is maintained in a private repository.  
-> This public repository is intended to showcase the product, architecture, features, and deployment approach.
 
 ---
 
