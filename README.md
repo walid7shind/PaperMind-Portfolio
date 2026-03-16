@@ -1,7 +1,7 @@
 
 ## Live Demo
 
-https://papermind-frontend.onrender.com/
+https://papermind-frontend.onrender.com
 
 > The full source code is maintained in a private repository.  
 > This public repository is intended to showcase the product, architecture, features, and deployment approach.
